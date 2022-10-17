@@ -202,6 +202,14 @@ func (r *Reconciler) queueChanges(
 	}
 
 	for _, change := range balanceChanges {
+		if len(r.interestingCurrencies) != 0 {
+			_, ok := r.interestingCurrencies[types.Hash(change.Currency)]
+			if !ok {
+				// not an interested currency
+				continue
+			}
+		}
+
 		// Add all seen accounts to inactive reconciler queue.
 		//
 		// Note: accounts are only added if they have not been seen before.

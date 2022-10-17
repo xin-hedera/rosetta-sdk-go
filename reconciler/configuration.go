@@ -49,6 +49,17 @@ func WithInterestingAccounts(interesting []*types.AccountCurrency) Option {
 	}
 }
 
+// WithInterestingCurrencies adds interesting accounts
+// to check at each block.
+func WithInterestingCurrencies(interesting []*types.Currency) Option {
+	return func(r *Reconciler) {
+		r.interestingCurrencies = make(map[string]struct{})
+		for _, currency := range interesting {
+			r.interestingCurrencies[types.Hash(currency)] = struct{}{}
+		}
+	}
+}
+
 // WithSeenAccounts adds accounts to the seenAccounts
 // slice and inactiveQueue for inactive reconciliation.
 func WithSeenAccounts(seen []*types.AccountCurrency) Option {

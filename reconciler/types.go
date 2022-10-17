@@ -260,13 +260,14 @@ type Reconciler struct {
 	handler Handler
 	parser  *parser.Parser
 
-	lookupBalanceByBlock bool
-	interestingAccounts  []*types.AccountCurrency
-	backlogSize          int
-	changeQueue          chan *parser.BalanceChange
-	inactiveFrequency    int64
-	debugLogging         bool
-	balancePruning       bool
+	lookupBalanceByBlock  bool
+	interestingAccounts   []*types.AccountCurrency
+	interestingCurrencies map[string]struct{}
+	backlogSize           int
+	changeQueue           chan *parser.BalanceChange
+	inactiveFrequency     int64
+	debugLogging          bool
+	balancePruning        bool
 
 	// Reconciler concurrency is separated between
 	// active and inactive concurrency to allow for
